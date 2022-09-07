@@ -1,5 +1,5 @@
 const client = require("../redis");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 const knex = require("../knex");
 const jwt = require('jsonwebtoken')
 const { hashPwd } = require("../Models/userModels");
@@ -15,6 +15,7 @@ if (userId)
  res.send({userId: userId[0], name, email, password});
   } catch (err) {
     console.log(err);
+    res.status(500).send(err);
   }
 };
 
@@ -31,6 +32,7 @@ const login = async (req, res) => {
   res.send({user, ok:true});}
   catch (err) {
     console.log(err);
+    res.status(500).send(err);
   }
 }
 
