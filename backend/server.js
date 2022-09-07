@@ -1,24 +1,21 @@
 const express = require('express')
 const app = express()
-require('dotenv').config()
+require('dotenv').config({path:"./.env"})
 const port = process.env.PORT
 const cors = require('cors')
 const client = require('./redis')
 const userRoutes = require('./Routes/userRoutes')
 const knex = require('./knex')
-
+const cookieParser = require('cookie-parser')
 
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({origin: process.env.BASE_URL, credentials: true}))
+app.use(cookieParser())
+
+
 app.use('/api/user', userRoutes)
 
-// const create = async ()=>{
-//   knex('users').insert({name: 'Debi', email: 'debi@test.com', password: '1234156'}).then(() => console.log('User added'))
-// }
-
-
-// create()
 
 knex
 .migrate
