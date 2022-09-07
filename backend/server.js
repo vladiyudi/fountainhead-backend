@@ -13,9 +13,9 @@ app.use(express.json())
 app.use(cors())
 app.use('/api/user', userRoutes)
 
-const create = async ()=>{
-  knex('users').insert({name: 'Vlqqqadi', email: 'test@test.com', password: '123456'}).then(() => console.log('User added'))
-}
+// const create = async ()=>{
+//   knex('users').insert({name: 'Debi', email: 'debi@test.com', password: '1234156'}).then(() => console.log('User added'))
+// }
 
 
 // create()

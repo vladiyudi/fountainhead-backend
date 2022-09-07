@@ -18,25 +18,25 @@ connetToRedis()
 
 
 
-client.set('op', JSON.stringify({name: "Mak", last: "Yudo", baba:{name: 'kakana', date: 35}, zizi: [1,2,3,4]}))
+// client.set('op', JSON.stringify({name: "Mak", last: "Yudo", baba:{name: 'kakana', date: 35}, zizi: [1,2,3,4]}))
 
-client.set('zipukk', 'kudsdsl')
+// client.set('zipukk', 'kudsdsl')
 
-client.set('student', JSON.stringify({class: "ITC", skils: ["coding", "dev"]}))
+// client.set('student', JSON.stringify({class: "ITC", skils: ["coding", "dev"]}))
 
-const bool = client.exists('op', (err, res)=>{console.log(res)})
+// const bool = client.exists('op', (err, res)=>{console.log(res)})
 
 
 
-const getFromRedis = async ()=>{
+// const getFromRedis = async ()=>{
 
-    const bool = await client.exists('o1p', (err, res)=>{console.log(res)})
-   const keys = await client.keys('*', (err, res)=>{console.log(res)})
-    const res = await client.get('KEYS *')
-    // console.log(res)
-}
+//     const bool = await client.exists('o1p', (err, res)=>{console.log(res)})
+//    const keys = await client.keys('*', (err, res)=>{console.log(res)})
+//     const res = await client.get('KEYS *')
+//     // console.log(res)
+// }
 
-getFromRedis()
+// getFromRedis()
 
 client.on('error', (err) => {
     console.log('Error ' + err)
