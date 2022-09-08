@@ -11,6 +11,7 @@ const googleAuth = require('./googleAuth')
 const session = require('express-session')
 const passport = require('passport')
 
+
 app.use(session({secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true}))
 app.use(passport.initialize())
 app.use(passport.session())
