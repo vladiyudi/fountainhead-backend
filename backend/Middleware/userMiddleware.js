@@ -5,6 +5,7 @@ const addFormats = require("ajv-formats");
 addFormats(ajv);
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+require("dotenv").config({path:"./.env"})
 
 const passwordMatch = (req, res, next) => {
     if (req.body.password1 !== req.body.password2) {
@@ -67,8 +68,11 @@ const validatePasswordMatch = async (req, res, next) => {
 }
 
 const auth = (req, res, next) => {
+  
   const { token } = req.cookies;
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(401).send("Unauthorized");
       return;

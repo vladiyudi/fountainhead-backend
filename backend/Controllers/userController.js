@@ -38,8 +38,11 @@ const login = async (req, res) => {
 
 const validateUser = async (req, res)=>{
   try{
-    const {userId} = req.body
-    const user = await knex("users").where({ id: userId })
+    const {userid} = req.body
+
+console.log(userid)
+
+    const user = await knex("users").where({ id:  userid})
     res.send(user)
   } catch (err){
     console.log(err);
