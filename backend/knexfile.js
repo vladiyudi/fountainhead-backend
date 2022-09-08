@@ -1,4 +1,5 @@
 const path = require('path')
+require('dotenv').config()
 
 const pathToMigrations = path.resolve(__dirname, './Migrations')
 
