@@ -5,6 +5,7 @@ const port = process.env.PORT
 const cors = require('cors')
 const client = require('./redis')
 const userRoutes = require('./Routes/userRoutes')
+const projectRoutes = require('./Routes/projectRoutes')
 const knex = require('./knex')
 const cookieParser = require('cookie-parser')
 const googleAuth = require('./googleAuth')
@@ -21,6 +22,8 @@ app.use(cookieParser())
 
 
 app.use('/api/user', userRoutes)
+
+app.use('/api/project' , projectRoutes)
 
 
 knex
