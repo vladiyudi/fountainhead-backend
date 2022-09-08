@@ -36,4 +36,15 @@ const login = async (req, res) => {
   }
 }
 
-module.exports = { signup, login };
+const validateUser = async (req, res)=>{
+  try{
+    const {userId} = req.body
+    const user = await knex("users").where({ id: userId })
+    res.send(user)
+  } catch (err){
+    console.log(err);
+    res.status(500).send(err);
+  }
+}
+
+module.exports = { signup, login, validateUser };

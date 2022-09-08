@@ -4,6 +4,7 @@ const ajv = new Ajv();
 const addFormats = require("ajv-formats");
 addFormats(ajv);
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const passwordMatch = (req, res, next) => {
     if (req.body.password1 !== req.body.password2) {
@@ -63,7 +64,19 @@ const validatePasswordMatch = async (req, res, next) => {
     else res.status(400).send("Password is incorrect");
   return
 } );
-
 }
 
-  module.exports = {passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch}
+const auth = (req, res, next) => {
+  const { token } = req.cookies;
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+    req.body.userid = decoded.id;
+    next();
+  }
+  );
+}
+
+  module.exports = {auth, passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch}

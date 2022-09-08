@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {signup, login} = require('../Controllers/userController')
-const {passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch}= require('../Middleware/userMiddleware')
+const {signup, login, validateUser} = require('../Controllers/userController')
+const {passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch, auth}= require('../Middleware/userMiddleware')
 const {makeDonation} = require('../Utils/stripe')
 const {signUpSchema, loginSchema} = require('../Schemas/userSchema')
 const passport = require('passport')
 
+router.get('/validate', auth, validateUser)
 
 router.post('/signup', passwordMatch, validateSignUp(signUpSchema), validateNewUser, signup)
 
