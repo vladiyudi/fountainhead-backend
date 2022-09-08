@@ -8,7 +8,6 @@ const passport = require('passport')
 
 router.post('/signup', passwordMatch, validateSignUp(signUpSchema), validateNewUser, signup)
 
-
 router.post('/login',  validateLogin(loginSchema), validateEmail, validatePasswordMatch, login)
 
 router.get('/google', 
@@ -19,9 +18,10 @@ router.get('/google/callback', passport.authenticate('google', {
     failureRedirect: '/api/user/fail' }), 
     )
 
-router.get('/success', (req, res)=>{
-    res.send(`Welcome ${req.user.displayName}`)
-})
+router.get('/success', (req, res, next)=>{
+    req.body.user = req.user[0]
+    next()
+}, login)
 
 router.get('/fail', (req, res)=>{
     res.send('fail')

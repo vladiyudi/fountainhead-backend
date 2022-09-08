@@ -1,5 +1,6 @@
 const passport = require('passport')
 require('dotenv').config({path:"./.env"})
+const knex = require('./knex')
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -9,14 +10,17 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:8080/api/user/google/callback"
   },
   
-  function(accessToken, refreshToken, profile, cb) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
+  async function(accessToken, refreshToken, profile, cb) {
 
-    console.log(profile)
-
-return cb(null, profile)
+   const user = await knex('users').where('email', profile.emails[0].value)
+   if (!user.length) {
+      const newUser = await knex('users').insert({
+        email: profile.emails[0].value,
+        password: profile.id,
+        name: profile.name.givenName,
+      })
+      return cb(null, {id: newUser[0], name: profile.name.givenName, email: profile.emails[0].value, password: profile.id})
+   } else return cb(null, user)
   }
 ));
 
