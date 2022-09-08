@@ -36,6 +36,6 @@ router.get('/logout', (req, res)=>{
         })
     })
   
-router.get('/donation', makeDonation)
+router.get('/donation', auth, makeDonation)
 
 module.exports = router
