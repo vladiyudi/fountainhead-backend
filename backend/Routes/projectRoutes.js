@@ -3,8 +3,12 @@ const router = express.Router()
 const projectController = require('../Controllers/ProjectController')
 
 
-router.get('/projects', projectController.getAllProjects)
+router
+    .get('/', projectController.getAllProjects)
+    .post('/', projectController.createNewProject)
 
+
+router.get('/one/:id', projectController.getProjectById)
 
 
 

@@ -32,7 +32,7 @@ knex
   .then(migration => {
     if (migration) console.log('connected to DB', migration)
     app.listen(port, () => {
-      console.log(`App listening at ${port} `)
+      console.log(`App listening at ${port} 🔥 `)
     })
   }).catch(err => console.log(err))
 
