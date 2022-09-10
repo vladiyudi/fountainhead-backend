@@ -13,6 +13,8 @@ const session = require('express-session')
 const passport = require('passport')
 
 
+
+
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -21,8 +23,10 @@ app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
 app.use(cookieParser())
 
 
-app.use('/api/user', userRoutes)
+app.use('/public/projectImg', express.static('public/projectImg'))
 
+
+app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
 
 

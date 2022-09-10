@@ -3,10 +3,12 @@ const router = express.Router()
 const projectController = require('../Controllers/ProjectController')
 
 
+
+
 router
     .get('/', projectController.getAllProjects)
-    .post('/', projectController.createNewProject)
-
+    .post('/', projectController.uploadProjectPicture, projectController.createNewProject)
+    
 
 router.get('/one/:id', projectController.getProjectById)
 
