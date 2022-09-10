@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-require('dotenv').config({path:"./.env"})
+require('dotenv').config({ path: "./.env" })
 const port = process.env.PORT
 const cors = require('cors')
 const client = require('./redis')
@@ -14,11 +14,13 @@ const passport = require('passport')
 require('./Utils/gitHubAuth')
 
 
-app.use(session({secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true}))
+
+
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
-app.use(cors({origin: process.env.BASE_URL, credentials: true}))
+app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
 app.use(cookieParser())
 
 app.use(function(req, res, next) {
@@ -29,21 +31,23 @@ app.use(function(req, res, next) {
 });
 
 
-app.use('/api/user', userRoutes)
+app.use('/public/projectImg', express.static('public/projectImg'))
 
-// app.use('/api/project' , projectRoutes)
+
+app.use('/api/user', userRoutes)
+app.use('/api/project', projectRoutes)
 
 
 
 
 knex
-.migrate
-.latest()
-.then(migration=>{
-if (migration) console.log('connected to DB', migration)
-app.listen(port, () => {
-  console.log(`App listening at ${port}`)
-})
-}).catch(err => console.log(err))
+  .migrate
+  .latest()
+  .then(migration => {
+    if (migration) console.log('connected to DB', migration)
+    app.listen(port, () => {
+      console.log(`App listening at ${port} 🔥 `)
+    })
+  }).catch(err => console.log(err))
 
 
