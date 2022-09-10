@@ -39,9 +39,6 @@ const login = async (req, res) => {
 const validateUser = async (req, res)=>{
   try{
     const {userid} = req.body
-
-console.log(userid)
-
     const user = await knex("users").where({ id:  userid})
     res.send(user)
   } catch (err){
@@ -50,4 +47,15 @@ console.log(userid)
   }
 }
 
-module.exports = { signup, login, validateUser };
+const updateUser= async (req, res)=>{
+  // try{
+  //   const {name, email, password} = req.body
+  //   const user = await knex("users").where({ id: id }).update({name, email, password})
+  //   res.send(user)
+  // } catch (err){
+  //   console.log(err);
+  //   res.status(500).send(err);
+  // }
+}
+
+module.exports = { signup, login, validateUser, updateUser };

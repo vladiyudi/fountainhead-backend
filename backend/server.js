@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const googleAuth = require('./googleAuth')
 const session = require('express-session')
 const passport = require('passport')
+require('./Utils/gitHubAuth')
 
 
 app.use(session({secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true}))
@@ -19,6 +20,13 @@ app.use(passport.session())
 app.use(express.json())
 app.use(cors({origin: process.env.BASE_URL, credentials: true}))
 app.use(cookieParser())
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 
 app.use('/api/user', userRoutes)
