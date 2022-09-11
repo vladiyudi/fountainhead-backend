@@ -127,7 +127,7 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 })
 
 
-exports.deleteProject = catchAsync(async (req, res, next) => {
+exports.deleteProject = catchAsync(async (req, res, next) => {})
 
 exports.getProjectByType = catchAsync(async (req, res, next) => {
     // knex('projects').where({type : }).then((project) => {
@@ -189,6 +189,4 @@ exports.getProjectByType = catchAsync(async (req, res, next) => {
         catch(err){
             console.log(err)
             res.status(500).json({message: 'Could not get votes'})
-        }
-    }
-
+        }}
