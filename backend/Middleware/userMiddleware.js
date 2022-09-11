@@ -68,10 +68,7 @@ const validatePasswordMatch = async (req, res, next) => {
 }
 
 const auth = (req, res, next) => {
-  
   const { token } = req.cookies;
-
-
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(401).send("Unauthorized");
