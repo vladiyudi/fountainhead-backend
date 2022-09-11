@@ -7,11 +7,12 @@
  exports.up = function (knex) {
     return knex.schema.createTable('clientsVotes', (table) => {
       table.increments('ratingId').primary()
-      table.string('projectId')
-      table.string('avgCreativity')
-      table.string('avgBestPractices')
-      table.string('avgDesign')
-      table.string('avgBugs')
+      table.integer('totalVotes')
+      table.integer('projectId')
+      table.integer('avgCreativity')
+      table.integer('avgBestPractices')
+      table.integer('avgDesign')
+      table.integer('avgBugs')
       table.timestamp('created_at').defaultTo(knex.fn.now())
     }).then(() => console.log('Table created'))
   };

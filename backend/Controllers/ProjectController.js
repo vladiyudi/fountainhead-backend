@@ -2,6 +2,7 @@ const knex = require("../knex");
 const catchAsync = require('../Utils/catchAsync')
 const AppError = require('../Utils/AppError')
 const multer = require('multer')
+const {addStudentVote, addClientVote} = require('../Models/projectModel')
 
 
 
@@ -82,15 +83,17 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
 })
 
 exports.getProjectById = catchAsync(async (req, res, next) => {
-
     const id = req.params.id
+<<<<<<< HEAD
 
     knex('projects').where({ projectId: id }).first().then((project) => {
 
+=======
+    knex('projects').where({ id: id }).first().then((project) => {
+>>>>>>> 5895d2d (voting is done)
         if (!project) {
             return next(new AppError('No Project Found With That ID', 404))
         }
-
         res.status(200).json({
             status: 'Success',
             data: project
@@ -190,6 +193,35 @@ exports.getProjectByType = catchAsync(async (req, res, next) => {
         catch(err){
             console.log(err)
             res.status(500).json({message: 'Could not get comments'})
+        }
+    }
+
+    exports.voteForProject = async (req, res) => {
+        try{
+        const {projectId} = req.params
+        const {userid} = req.body
+        let newRating
+    const user = await knex('users').where({id: userid})
+    if (user[0].role === 'student') newRating = await addStudentVote(projectId, req.body)
+    else newRating = await addClientVote(projectId, req.body)
+    res.send(newRating)
+
+         } catch(err){
+            console.log(err)
+            res.status(500).json({message: 'Could not vote'})
+        }
+    }
+
+    exports.getProjectVotes = async (req, res) => {
+        try{
+        const {projectId} = req.params
+        const studentVotes = await knex('studentRating').where({projectId: projectId})
+
+        const clientVotes = await knex('clientsVotes').where({projectId: projectId})
+        res.status(200).json({studentVotes: studentVotes[0], clientVotes: clientVotes[0]})}
+        catch(err){
+            console.log(err)
+            res.status(500).json({message: 'Could not get votes'})
         }
     }
 
