@@ -46,17 +46,12 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                     results: rows.length,
                     data: rows
                 })
-
-
                 next()
             })
-
             .catch(err => {
                 console.log(err)
                 return new AppError('Something Went Wrong', 404)
             })
-
-   
     } else {
 
         //  Get All Projects
@@ -135,21 +130,36 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 
 exports.getProjectByType = catchAsync(async (req, res, next) => {
-
-
     // knex('projects').where({type : }).then((project) => {
-
-
-
     //     res.status(200).json({
     //         status: 'Success',
     //         data: project
     //     })
-
-
     // })
 
 })
 
 
+ exports.addComment = async (req, res) => {
+    try{
+    const {projectId} = req.params
+    const {comment, code, userid} = req.body
+    const newComment = await knex('comments').insert({comment, code, userId:userid, projectId: projectId})
+    res.status(200).json(newComment)}
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Could not add comment'})
+    }
+ }
+
+    exports.getComments = async (req, res) => {
+        try{
+        const {projectId} = req.params
+        const comments = await knex('comments').where({projectId: projectId})
+        res.status(200).json(comments)}
+        catch(err){
+            console.log(err)
+            res.status(500).json({message: 'Could not get comments'})
+        }
+    }
 

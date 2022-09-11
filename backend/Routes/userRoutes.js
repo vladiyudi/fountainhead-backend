@@ -19,14 +19,10 @@ router.get(`/github/callback`,
   passport.authenticate('github', { 
     successRedirect: '/api/user/githubsuccess',
     failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/githubsuccess');
-//   }
   );
 
 router.get('/githubsuccess', (req, res, next)=>{
-    req.body.user = req?.user[0]
+    req.body.user = req?.user
     next()
 }, login)
 
@@ -39,7 +35,7 @@ router.get('/google/callback', passport.authenticate('google', {
     )
 
 router.get('/success', (req, res, next)=>{
-    req.body.user = req?.user[0]
+    req.body.user = req?.user
     next()
 }, login)
 

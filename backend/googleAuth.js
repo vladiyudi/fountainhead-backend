@@ -11,15 +11,17 @@ passport.use(new GoogleStrategy({
   },
   
   async function(accessToken, refreshToken, profile, cb) {
-
    const user = await knex('users').where('email', profile.emails[0].value)
    if (!user.length) {
       const newUser = await knex('users').insert({
         email: profile.emails[0].value,
         password: profile.id,
         name: profile.name.givenName,
+        avatar: profile.photos[0].value,
+        bio: '',
+        role: 'student'
       })
-      return cb(null, {id: newUser[0], name: profile.name.givenName, email: profile.emails[0].value, password: profile.id})
+      return cb(null, {id: newUser[0], name: profile.name.givenName, email: profile.emails[0].value, password: profile.id, avatar: profile.photos[0].value, bio: '', role: 'student'})
    } else return cb(null, user)
   }
 ));

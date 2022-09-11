@@ -9,16 +9,15 @@ const signup = async (req, res) => {
     const { name, email, password1 } = req.body;
     const password = await hashPwd(password1);
     const userId = await knex("users")
-      .insert({ name, email, password})
+      .insert({ name, email, password, role})
 
 if (userId) 
- res.send({userId: userId[0], name, email, password});
+ res.send({userId: userId[0], name, email, password, role});
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 };
-
 
 const login = async (req, res) => {
   try{

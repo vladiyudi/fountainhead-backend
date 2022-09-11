@@ -14,33 +14,42 @@ const passport = require('passport')
 require('./Utils/gitHubAuth')
 
 
-
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
 
-app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
+// app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
 
-app.use(cors({origin: [process.env.BASE_URL, process.env.SERVER_URL], credentials: true}))
+app.options('/api/user/google', cors(),
+(res)=>{
+  console.log("here")
+}) // enable pre-flight request for DELETE request
+
+
+// app.options('*', cors(),(req,res)=>{
+//   console.log(req);
+// }) // include before other routes
+
+
+app.use(cors(
+  {
+  origin: 
+  [process.env.BASE_URL, process.env.SERVER_URL],
+   credentials: true}
+   ))
 
 app.use(cookieParser())
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   next();
 });
 
 
 app.use('/public/projectImg', express.static('public/projectImg'))
-
-
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
-
-
 
 
 knex
