@@ -56,7 +56,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                 return new AppError('Something Went Wrong', 404)
             })
 
-   
+
     } else {
 
         //  Get All Projects
@@ -85,7 +85,7 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 
     const id = req.params.id
 
-    knex('projects').where({ id: id }).first().then((project) => {
+    knex('projects').where({ projectId: id }).first().then((project) => {
 
         if (!project) {
             return next(new AppError('No Project Found With That ID', 404))
@@ -102,17 +102,17 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
     console.log(req.file)
     console.log(req.body)
+    // const picture = req.file.filename
 
-    const { type, name, info, link } = req.body
-    const picture = req.file.filename
+    const { type, name, info, iframe } = req.body
+
 
     knex.insert(
         {
-            type: type,
-            name: name,
-            info: info,
-            picture: picture,
-            link: link
+            type,
+            name,
+            info,
+            iframe
         }
     ).into('projects')
 
@@ -133,21 +133,29 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 })
 
 
+exports.deleteProject = catchAsync(async (req, res, next) => {
 
-exports.getProjectByType = catchAsync(async (req, res, next) => {
+    const id = req.body.projectId
 
+    console.log(id)
 
-    // knex('projects').where({type : }).then((project) => {
+    knex('projects')
+        .where('projectId', id).del()
 
+        .then(res => {
 
+            if (!res) {
+                return next(new AppError('No Project Found With That ID', 404))
+            }
 
-    //     res.status(200).json({
-    //         status: 'Success',
-    //         data: project
-    //     })
+            res.status(204).json({
+                status: 'success',
+                message: "Project Successfully Deleted",
+                data: null
 
+            })
 
-    // })
+        })
 
 })
 
