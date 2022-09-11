@@ -51,17 +51,10 @@ const signup = async (req, res) => {
     const { name, email, password1 } = req.body;
     const password = await hashPwd(password1);
     const userId = await knex("users")
-<<<<<<< HEAD
       .insert({ name, email, password })
 
     if (userId)
       res.send({ userId: userId[0], name, email, password });
-=======
-      .insert({ name, email, password, role: 'student'})
-
-if (userId) 
- res.send({userId: userId[0], name, email, password, role: 'student'});
->>>>>>> 5895d2d (voting is done)
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

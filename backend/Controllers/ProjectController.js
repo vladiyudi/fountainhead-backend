@@ -53,11 +53,6 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                 console.log(err)
                 return new AppError('Something Went Wrong', 404)
             })
-<<<<<<< HEAD
-=======
-
-
->>>>>>> Level-1
     } else {
 
         //  Get All Projects
@@ -84,13 +79,9 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
 
 exports.getProjectById = catchAsync(async (req, res, next) => {
     const id = req.params.id
-<<<<<<< HEAD
 
     knex('projects').where({ projectId: id }).first().then((project) => {
 
-=======
-    knex('projects').where({ id: id }).first().then((project) => {
->>>>>>> 5895d2d (voting is done)
         if (!project) {
             return next(new AppError('No Project Found With That ID', 404))
         }
@@ -138,7 +129,6 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
 
-<<<<<<< HEAD
 exports.getProjectByType = catchAsync(async (req, res, next) => {
     // knex('projects').where({type : }).then((project) => {
     //     res.status(200).json({
@@ -146,29 +136,6 @@ exports.getProjectByType = catchAsync(async (req, res, next) => {
     //         data: project
     //     })
     // })
-=======
-    const id = req.body.projectId
-
-    console.log(id)
-
-    knex('projects')
-        .where('projectId', id).del()
-
-        .then(res => {
-
-            if (!res) {
-                return next(new AppError('No Project Found With That ID', 404))
-            }
-
-            res.status(204).json({
-                status: 'success',
-                message: "Project Successfully Deleted",
-                data: null
-
-            })
-
-        })
->>>>>>> Level-1
 
 })
 
