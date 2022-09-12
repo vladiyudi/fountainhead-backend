@@ -53,7 +53,20 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                 console.log(err)
                 return new AppError('Something Went Wrong', 404)
             })
-    } else {
+    }
+    //  Query Project by Name
+    if (req.body.name) {
+
+        const data = await knex('projects').whereILike('name', `%${req.body.name}%`)
+        console.log(data)
+
+        res.status(200).json({
+            status: 'Success',
+            data: data
+        })
+    }
+
+    else {
 
         //  Get All Projects
         knex('projects')
@@ -136,16 +149,16 @@ exports.deleteProject = catchAsync(async (req, res, next) => {
     knex('projects')
         .where('projectId', id).del()
 
-        .then(res => {
+        .then(data => {
 
-            if (!res) {
+            if (!data) {
                 return next(new AppError('No Project Found With That ID', 404))
             }
 
-            res.status(204).json({
+            res.status(200).json({
                 status: 'success',
                 message: "Project Successfully Deleted",
-                data: null
+                data: data
 
             })
 

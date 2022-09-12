@@ -46,6 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+
 
 app.use('/public/projectImg', express.static('public/projectImg'))
 app.use('/api/user', userRoutes)
