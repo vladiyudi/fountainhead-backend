@@ -59,10 +59,9 @@ router.get('/logout', (req, res) => {
 router.get('/donation', auth, makeDonation)
 
 router.put('/update',
-    auth,
     uploadUserPicture,
+    auth,
     uploadToCloudinary,
-    updateUser
 )
 
 module.exports = router

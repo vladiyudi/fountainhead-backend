@@ -52,11 +52,8 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                 console.log(err)
                 return new AppError('Something Went Wrong', 404)
             })
-<<<<<<< HEAD
-=======
 
 
->>>>>>> Level-1
     } else {
 
         //  Get All Projects
@@ -135,15 +132,6 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
 
-<<<<<<< HEAD
-exports.getProjectByType = catchAsync(async (req, res, next) => {
-    // knex('projects').where({type : }).then((project) => {
-    //     res.status(200).json({
-    //         status: 'Success',
-    //         data: project
-    //     })
-    // })
-=======
     const id = req.body.projectId
 
     console.log(id)
@@ -165,7 +153,6 @@ exports.getProjectByType = catchAsync(async (req, res, next) => {
             })
 
         })
->>>>>>> Level-1
 
 })
 

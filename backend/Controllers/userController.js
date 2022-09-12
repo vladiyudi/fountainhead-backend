@@ -92,6 +92,7 @@ const validateUser = async (req, res) => {
 
 
 const uploadToCloudinary = async (req, res, next) => {
+
   if (!req.file?.path) {
     req.body.picture = defaultUserPhoto;
   } else {
@@ -101,9 +102,36 @@ const uploadToCloudinary = async (req, res, next) => {
         return;
       }
       if (result) {
-        fs.unlinkSync(req.file.path); 
-        req.body.photo = result.url    
-        next();
+        fs.unlinkSync(req.file.path);
+        req.body.photo = result.url
+
+
+        console.log('USER ID 💥', req.body)
+        const userId = req.body.userid
+        const photoUrl = req.body.photo
+
+        //  Get Current user + Set req.body.photo to avatar 
+
+        knex('users').where({ id: userId })
+          .update({ avatar: req.body.photo })
+
+          .then(data => {
+            console.log('DATA', data)
+
+
+            res.status(200).json({
+              status: 'Success',
+              data
+            })
+
+
+
+          })
+
+
+
+
+
         return;
       }
     });
@@ -114,9 +142,13 @@ const uploadToCloudinary = async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res) => {
 
-  console.log('👽', req.body.photo)
+  // console.log('👽', req.body.photo)
 
-  console.log(  '🔰' ,req.body)
+  console.log(res.locals)
+
+  console.log('💥', req.body)
+
+  // console.log(  '🔰' ,req.body)
 
 
 
