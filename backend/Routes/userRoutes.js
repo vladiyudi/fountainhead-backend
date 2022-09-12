@@ -5,6 +5,7 @@ const { passwordMatch, validateNewUser, validateSignUp, validateLogin, validateE
 const { makeDonation } = require('../Utils/stripe')
 const { signUpSchema, loginSchema } = require('../Schemas/userSchema')
 const passport = require('passport')
+const { update } = require('jugglingdb/lib/model')
 
 router.get('/validate', auth, validateUser)
 
@@ -54,10 +55,12 @@ router.get('/logout', (req, res) => {
 
 router.get('/donation', auth, makeDonation)
 
-router.put('/update',
+router.put('/updatePicture',
     uploadUserPicture,
     auth,
     uploadToCloudinary,
 )
+
+router.patch('/updateMe' , auth  , updateUser)
 
 module.exports = router

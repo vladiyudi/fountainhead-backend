@@ -160,15 +160,25 @@ const uploadToCloudinary = async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res) => {
 
-  // console.log('👽', req.body.photo)
+  const userId = req.body.userid
+  
+  knex('users').where({ id: userId })
+    .update(
+      {
+        name: req.body.name,
+        email: req.body.email,
+        bio: req.body.bio
+      }
+    )
 
-  console.log(res.locals)
+    .then(data => {
+        console.log(data)
 
-  console.log('💥', req.body)
-
-  // console.log(  '🔰' ,req.body)
-
-
+        res.status(200).json({
+            status : 'Success',
+            data 
+        })
+    })
 
 })
 

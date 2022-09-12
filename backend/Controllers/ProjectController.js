@@ -2,7 +2,7 @@ const knex = require("../knex");
 const catchAsync = require('../Utils/catchAsync')
 const AppError = require('../Utils/AppError')
 const multer = require('multer')
-const {addStudentVote, addClientVote} = require('../Models/projectModel')
+const { addStudentVote, addClientVote } = require('../Models/projectModel')
 
 
 
@@ -127,7 +127,7 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 })
 
 
-exports.deleteProject = catchAsync(async (req, res, next) => {})
+exports.deleteProject = catchAsync(async (req, res, next) => {
 
     const id = req.body.projectId
 
@@ -150,57 +150,61 @@ exports.deleteProject = catchAsync(async (req, res, next) => {})
             })
 
         })
+})
 
 
 
-
- exports.addComment = async (req, res) => {
-    try{
-    const {projectId} = req.params
-    const {comment, code, userid} = req.body
-    const newComment = await knex('comments').insert({comment, code, userId:userid, projectId: projectId})
-    res.status(200).json(newComment)}
-    catch(err){
+exports.addComment = async (req, res) => {
+    try {
+        const { projectId } = req.params
+        const { comment, code, userid } = req.body
+        const newComment = await knex('comments').insert({ comment, code, userId: userid, projectId: projectId })
+        res.status(200).json(newComment)
+    }
+    catch (err) {
         console.log(err)
-        res.status(500).json({message: 'Could not add comment'})
+        res.status(500).json({ message: 'Could not add comment' })
     }
- }
+}
 
-    exports.getComments = async (req, res) => {
-        try{
-        const {projectId} = req.params
-        const comments = await knex('comments').where({projectId: projectId})
-        res.status(200).json(comments)}
-        catch(err){
-            console.log(err)
-            res.status(500).json({message: 'Could not get comments'})
-        }
+exports.getComments = async (req, res) => {
+    try {
+        const { projectId } = req.params
+        const comments = await knex('comments').where({ projectId: projectId })
+        res.status(200).json(comments)
     }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Could not get comments' })
+    }
+}
 
-    exports.voteForProject = async (req, res) => {
-        try{
-        const {projectId} = req.params
-        const {userid} = req.body
+exports.voteForProject = async (req, res) => {
+    try {
+        const { projectId } = req.params
+        const { userid } = req.body
         let newRating
-    const user = await knex('users').where({id: userid})
-    if (user[0].role === 'student') newRating = await addStudentVote(projectId, req.body)
-    else newRating = await addClientVote(projectId, req.body)
-    res.send(newRating)
+        const user = await knex('users').where({ id: userid })
+        if (user[0].role === 'student') newRating = await addStudentVote(projectId, req.body)
+        else newRating = await addClientVote(projectId, req.body)
+        res.send(newRating)
 
-         } catch(err){
-            console.log(err)
-            res.status(500).json({message: 'Could not vote'})
-        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Could not vote' })
     }
+}
 
-    exports.getProjectVotes = async (req, res) => {
-        try{
-        const {projectId} = req.params
-        const studentVotes = await knex('studentRating').where({projectId: projectId})
+exports.getProjectVotes = async (req, res) => {
+    try {
+        const { projectId } = req.params
+        const studentVotes = await knex('studentRating').where({ projectId: projectId })
 
-        const clientVotes = await knex('clientsVotes').where({projectId: projectId})
-        res.status(200).json({studentVotes: studentVotes[0], clientVotes: clientVotes[0]})}
-        catch(err){
-            console.log(err)
-            res.status(500).json({message: 'Could not get votes'})
-        }}
+        const clientVotes = await knex('clientsVotes').where({ projectId: projectId })
+        res.status(200).json({ studentVotes: studentVotes[0], clientVotes: clientVotes[0] })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Could not get votes' })
+    }
+}
