@@ -3,7 +3,7 @@ const router = express.Router()
 const projectController = require('../Controllers/ProjectController')
 const {auth} = require('../Middleware/userMiddleware')
 
-const {addComment, getComments} = require('../Controllers/ProjectController')
+const {addComment, getComments, voteForProject, getProjectVotes} = require('../Controllers/ProjectController')
 
 
 router
@@ -17,5 +17,9 @@ router.get('/one/:id', projectController.getProjectById)
 router.post('/addComment/:projectId', auth, addComment)
 
 router.get('/getComments/:projectId', auth, getComments)
+
+router.post('/vote/:projectId', auth, voteForProject)
+
+router.get('/vote/:projectId', auth, getProjectVotes)
 
 module.exports = router
