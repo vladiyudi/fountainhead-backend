@@ -23,7 +23,6 @@ app.use(express.json())
 
 app.options('/api/user/google', cors(),
 (res)=>{
-  console.log("here")
 }) // enable pre-flight request for DELETE request
 
 

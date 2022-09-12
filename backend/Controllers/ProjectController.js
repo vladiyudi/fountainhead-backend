@@ -129,27 +129,27 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {})
 
-    const id = req.body.projectId
+    // const id = req.body.projectId
 
-    console.log(id)
+    // console.log(id)
 
-    knex('projects')
-        .where('projectId', id).del()
+    // knex('projects')
+    //     .where('projectId', id).del()
 
-        .then(res => {
+    //     .then(res => {
 
-            if (!res) {
-                return next(new AppError('No Project Found With That ID', 404))
-            }
+    //         if (!res) {
+    //             return next(new AppError('No Project Found With That ID', 404))
+    //         }
 
-            res.status(204).json({
-                status: 'success',
-                message: "Project Successfully Deleted",
-                data: null
+    //         res.status(204).json({
+    //             status: 'success',
+    //             message: "Project Successfully Deleted",
+    //             data: null
 
-            })
+    //         })
 
-        })
+    //     })
 
 
 

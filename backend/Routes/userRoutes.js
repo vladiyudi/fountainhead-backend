@@ -8,13 +8,29 @@ const passport = require('passport')
 
 router.get('/validate', auth, validateUser)
 
+router.get('/donation', makeDonation)
+
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
+
+router.get('/success', (req, res, next) => {
+    req.body.user = req?.user[0]
+    next()
+}, loginWithGoogle )
+
+
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
+
+router.get('/githubsuccess', (req, res, next) => {
+    req.body.user = req?.user[0]
+    next()
+}, loginWithGoogle)
+
 router.get('/:userId', getUserById)
 
 router.post('/signup', passwordMatch, validateSignUp(signUpSchema), validateNewUser, signup)
 
 router.post('/login', validateLogin(loginSchema), validateEmail, validatePasswordMatch, login)
 
-router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
 
 
 router.get(`/github/callback`,
@@ -24,24 +40,13 @@ router.get(`/github/callback`,
     }),
 );
 
-router.get('/githubsuccess', (req, res, next) => {
-    req.body.user = req?.user[0]
-    next()
-}, loginWithGoogle)
-
-router.get('/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }))
-
 router.get('/google/callback', passport.authenticate('google', {
     successRedirect: '/api/user/success',
     failureRedirect: '/api/user/fail'
 }),
 )
 
-router.get('/success', (req, res, next) => {
-    req.body.user = req?.user[0]
-    next()
-}, loginWithGoogle)
+
 
 router.get('/fail', (req, res) => {
     res.send('fail')
@@ -54,7 +59,9 @@ router.get('/logout', (req, res) => {
     })
 })
 
-router.get('/donation', auth, makeDonation)
+// router.get('/donation', auth, makeDonation)
+
+
 
 router.put('/update',
     uploadUserPicture,

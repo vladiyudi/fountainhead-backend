@@ -43,9 +43,6 @@ const uploadUserPicture = upload.single('photo')
 const getUserById = async (req, res) => {
   try {
     const { userId } = req.params
-
-
-
     const user = await knex("users").where({ id: userId })
     res.send(user)
   } catch (err) {
