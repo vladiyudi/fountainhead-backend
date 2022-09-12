@@ -40,11 +40,19 @@ const upload = multer({
 
 const uploadUserPicture = upload.single('photo')
 
+const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params
 
 
 
-
-
+    const user = await knex("users").where({ id: userId })
+    res.send(user)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+}
 
 const signup = async (req, res) => {
   try {
@@ -172,4 +180,4 @@ const updateUser = catchAsync(async (req, res) => {
 
 })
 
-module.exports = { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
+module.exports = {getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
