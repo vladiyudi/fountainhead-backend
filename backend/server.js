@@ -32,13 +32,13 @@ app.options('/api/user/google', cors(),
 // }) // include before other routes
 
 
-// app.use(cors(
-//   {
-//   origin: 
-//   [process.env.BASE_URL, process.env.SERVER_URL],
-//    credentials: true, methods: "get, post, put, options"}
-//    ))
-app.use(cors({credentials: true}));
+app.use(cors(
+  {
+  origin: 
+  [process.env.BASE_URL, process.env.SERVER_URL],
+   credentials: true, methods: "get, post, put, options"}
+   ))
+
 app.use(cookieParser())
 
 app.use((req, res, next) => {

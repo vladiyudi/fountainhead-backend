@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle } = require('../Controllers/userController')
+const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle, getUserById } = require('../Controllers/userController')
 const { passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch, auth } = require('../Middleware/userMiddleware')
 const { makeDonation } = require('../Utils/stripe')
 const { signUpSchema, loginSchema } = require('../Schemas/userSchema')
 const passport = require('passport')
 
 router.get('/validate', auth, validateUser)
+
+router.get('/:userId', getUserById)
 
 router.post('/signup', passwordMatch, validateSignUp(signUpSchema), validateNewUser, signup)
 
