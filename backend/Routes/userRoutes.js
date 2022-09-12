@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary } = require('../Controllers/userController')
+const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle } = require('../Controllers/userController')
 const { passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch, auth } = require('../Middleware/userMiddleware')
 const { makeDonation } = require('../Utils/stripe')
 const { signUpSchema, loginSchema } = require('../Schemas/userSchema')
@@ -20,16 +20,12 @@ router.get(`/github/callback`,
         successRedirect: '/api/user/githubsuccess',
         failureRedirect: '/login'
     }),
-    //   function(req, res) {
-    //     // Successful authentication, redirect home.
-    //     res.redirect('/githubsuccess');
-    //   }
 );
 
 router.get('/githubsuccess', (req, res, next) => {
     req.body.user = req?.user[0]
     next()
-}, login)
+}, loginWithGoogle)
 
 router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }))
@@ -43,7 +39,7 @@ router.get('/google/callback', passport.authenticate('google', {
 router.get('/success', (req, res, next) => {
     req.body.user = req?.user[0]
     next()
-}, login)
+}, loginWithGoogle)
 
 router.get('/fail', (req, res) => {
     res.send('fail')

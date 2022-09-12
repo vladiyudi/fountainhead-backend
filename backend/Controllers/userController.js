@@ -79,6 +79,24 @@ const login = async (req, res) => {
   }
 }
 
+const loginWithGoogle = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '5d' })
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+      maxAge: 15151252151251
+    })
+    res.redirect('http://localhost:3000/donation')
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+}
+
 const validateUser = async (req, res) => {
   try {
     const { userid } = req.body
@@ -122,4 +140,4 @@ const updateUser = catchAsync(async (req, res) => {
 
 })
 
-module.exports = { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary };
+module.exports = { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
