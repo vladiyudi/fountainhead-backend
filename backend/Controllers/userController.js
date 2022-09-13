@@ -56,10 +56,10 @@ const signup = async (req, res) => {
     const { name, email, password1 } = req.body;
     const password = await hashPwd(password1);
     const userId = await knex("users")
-      .insert({ name, email, password, role:'student' })
+      .insert({ name, email, password, role: 'student' })
 
     if (userId)
-      res.send({ userId: userId[0], name, email, password, role:'student' });
+      res.send({ userId: userId[0], name, email, password, role: 'student' });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
@@ -144,16 +144,9 @@ const uploadToCloudinary = async (req, res, next) => {
 
             res.status(200).json({
               status: 'Success',
-              data
+              data: photoUrl
             })
-
-
-
           })
-
-
-
-
 
         return;
       }
@@ -166,7 +159,7 @@ const uploadToCloudinary = async (req, res, next) => {
 const updateUser = catchAsync(async (req, res) => {
 
   const userId = req.body.userid
-  
+
   knex('users').where({ id: userId })
     .update(
       {
@@ -176,15 +169,17 @@ const updateUser = catchAsync(async (req, res) => {
       }
     )
 
-    .then(data => {
-        console.log(data)
+  
 
-        res.status(200).json({
-            status : 'Success',
-            data 
-        })
+    .then(data => {
+      console.log(data)
+
+      res.status(200).json({
+        status: 'Success',
+        data
+      })
     })
 
 })
 
-module.exports = {getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
+module.exports = { getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };

@@ -85,9 +85,6 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
                 return new AppError('Something Went Wrong', 404)
             })
     }
-
-
-
 })
 
 exports.getProjectById = catchAsync(async (req, res, next) => {

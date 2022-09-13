@@ -68,7 +68,7 @@ router.get('/fail', (req, res) => {
 
 
 
-router.put('/updatePicture',
+router.patch('/updatePicture',
     uploadUserPicture,
     auth,
     uploadToCloudinary,
