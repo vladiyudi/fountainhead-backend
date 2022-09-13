@@ -89,8 +89,8 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
+//   console.log(req.file);
+//   console.log(req.body);
   // const picture = req.file.filename
 
   const { type, name, info, iframe } = req.body;
@@ -105,6 +105,8 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
     .into("projects")
 
     .then((data) => {
+        addStudentVote(data, {creativity: 0, bestPractices: 0, design: 0, bugs: 0})
+        addClientVote(data, {creativity: 0, bestPractices: 0, design: 0, bugs: 0})
       res.status(200).json(data);
     })
 
