@@ -40,21 +40,26 @@ const upload = multer({
 
 const uploadUserPicture = upload.single('photo')
 
-
-
-
-
-
+const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params
+    const user = await knex("users").where({ id: userId })
+    res.send(user)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+}
 
 const signup = async (req, res) => {
   try {
     const { name, email, password1 } = req.body;
     const password = await hashPwd(password1);
     const userId = await knex("users")
-      .insert({ name, email, password })
+      .insert({ name, email, password, role:'student' })
 
     if (userId)
-      res.send({ userId: userId[0], name, email, password });
+      res.send({ userId: userId[0], name, email, password, role:'student' });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
@@ -89,7 +94,7 @@ const loginWithGoogle = async (req, res) => {
       secure: process.env.NODE_ENV === 'production' ? true : false,
       maxAge: 15151252151251
     })
-    res.redirect('http://localhost:3000/donation')
+    res.redirect('http://localhost:3000/')
   }
   catch (err) {
     console.log(err);
@@ -182,4 +187,4 @@ const updateUser = catchAsync(async (req, res) => {
 
 })
 
-module.exports = { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
+module.exports = {getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };

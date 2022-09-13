@@ -23,7 +23,6 @@ app.use(express.json())
 
 app.options('/api/user/google', cors(),
 (res)=>{
-  console.log("here")
 }) // enable pre-flight request for DELETE request
 
 
@@ -32,13 +31,13 @@ app.options('/api/user/google', cors(),
 // }) // include before other routes
 
 
-// app.use(cors(
-//   {
-//   origin: 
-//   [process.env.BASE_URL, process.env.SERVER_URL],
-//    credentials: true, methods: "get, post, put, options"}
-//    ))
-app.use(cors({credentials: true}));
+app.use(cors(
+  {
+  origin: 
+  [process.env.BASE_URL, process.env.SERVER_URL],
+   credentials: true, methods: "get, post, put, options"}
+   ))
+
 app.use(cookieParser())
 
 // app.use((req, res, next) => {
@@ -52,8 +51,6 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use('/public/projectImg', express.static('public/projectImg'))
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
-
-
 
 knex
   .migrate
