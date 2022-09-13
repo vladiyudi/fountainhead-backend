@@ -21,24 +21,8 @@ app.use(express.json())
 
 app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
 
-app.options('/api/user/google', cors(),
-(res)=>{
-}) // enable pre-flight request for DELETE request
-
-
-// app.options('*', cors(),(req,res)=>{
-//   console.log(req);
-// }) // include before other routes
-
-
-
 app.use(cookieParser())
-
-
-
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
-
-
 app.use('/public/projectImg', express.static('public/projectImg'))
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
