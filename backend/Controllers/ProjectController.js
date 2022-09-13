@@ -143,46 +143,24 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
 
-    // const id = req.body.projectId
+    const id = req.body.projectId
 
-    // console.log(id)
+    console.log(id)
 
-    // knex('projects')
-    //     .where('projectId', id).del()
+    knex('projects')
+        .where('projectId', id).del()
 
-<<<<<<< HEAD
         .then(data => {
-
-            if (!data) {
-                return next(new AppError('No Project Found With That ID', 404))
-            }
 
             res.status(200).json({
                 status: 'success',
                 message: "Project Successfully Deleted",
-                data: data
-=======
-    //     .then(res => {
+                data
 
-    //         if (!res) {
-    //             return next(new AppError('No Project Found With That ID', 404))
-    //         }
+            })
 
-    //         res.status(204).json({
-    //             status: 'success',
-    //             message: "Project Successfully Deleted",
-    //             data: null
->>>>>>> 5ee520b6b611fe9896eaf13d1e06dc9c333c5141
-
-    //         })
-
-<<<<<<< HEAD
         })
-})
-=======
-    //     })
->>>>>>> 5ee520b6b611fe9896eaf13d1e06dc9c333c5141
-
+    })
 
 
 exports.addComment = async (req, res) => {
@@ -239,3 +217,4 @@ exports.getProjectVotes = async (req, res) => {
         res.status(500).json({ message: 'Could not get votes' })
     }
 }
+
