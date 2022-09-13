@@ -41,10 +41,10 @@ app.options('/api/user/google', cors(),
 app.use(cors({credentials: true}));
 app.use(cookieParser())
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin" : "http://localhost:3000");
+//   next();
+// });
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 

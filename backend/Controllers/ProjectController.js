@@ -107,15 +107,16 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
 
-    console.log(req.file)
+
     console.log(req.body)
-    // const picture = req.file.filename
+
 
     const { type, name, info, iframe } = req.body
 
 
     knex.insert(
         {
+            userid: req.body.userid,
             type,
             name,
             info,
