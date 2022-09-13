@@ -9,6 +9,7 @@ const {
   voteForProject,
   getProjectVotes,
   sortByVotes,
+  getProjectsByUserId
 } = require("../Controllers/ProjectController");
 
 router
@@ -31,5 +32,7 @@ router.post("/vote/:projectId", auth, voteForProject);
 router.get("/vote/:projectId", auth, getProjectVotes);
 
 router.get("/sort", auth, sortByVotes);
+
+router.get('/userProjects' , auth , getProjectsByUserId )
 
 module.exports = router;

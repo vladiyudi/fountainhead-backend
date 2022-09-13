@@ -133,7 +133,7 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
-   
+
     const { type, name, info, iframe } = req.body;
 
     knex
@@ -157,28 +157,29 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
         });
 });
 
-exports.deleteProject = catchAsync(async (req, res, next) =>  { ;
+exports.deleteProject = catchAsync(async (req, res, next) => {
+    ;
 
-const id = req.body.projectId
+    const id = req.body.projectId
 
-console.log(id)
+    console.log(id)
 
-knex('projects')
-    .where('projectId', id).del()
+    knex('projects')
+        .where('projectId', id).del()
 
-    .then(data => {
+        .then(data => {
 
-        if (!data) {
-            return next(new AppError('No Project Found With That ID', 404))
-        }
+            if (!data) {
+                return next(new AppError('No Project Found With That ID', 404))
+            }
 
-        res.status(204).json({
-            status: 'success',
-            message: "Project Successfully Deleted",
-            data: null
+            res.status(204).json({
+                status: 'success',
+                message: "Project Successfully Deleted",
+                data: null
 
+            })
         })
-    })
 })
 
 exports.addComment = async (req, res) => {
@@ -265,3 +266,18 @@ exports.sortByVotes = async (req, res) => {
     }
 
 };
+
+
+exports.getProjectsByUserId = catchAsync(async (req, res, next) => {
+
+    const { userid } = req.body;
+
+    knex('projects').where({ userId: userid })
+        .then(data => {
+
+            res.status(200).json({
+                status: 'success',
+                data : data
+            })
+        })
+})
