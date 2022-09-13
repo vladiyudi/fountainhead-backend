@@ -133,10 +133,7 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
-    //   console.log(req.file);
-    //   console.log(req.body);
-    // const picture = req.file.filename
-
+   
     const { type, name, info, iframe } = req.body;
 
     knex
@@ -181,12 +178,8 @@ knex('projects')
             data: null
 
         })
-
     })
-
 })
-
-
 
 exports.addComment = async (req, res) => {
     try {
@@ -270,7 +263,5 @@ exports.sortByVotes = async (req, res) => {
         res.status(500).json({ message: "Could not sort" })
         console.log(err)
     }
-
-
 
 };
