@@ -19,7 +19,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
 
-// app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
+app.use(cors({ origin: process.env.BASE_URL, credentials: true }))
 
 app.options('/api/user/google', cors(),
 (res)=>{
@@ -31,19 +31,10 @@ app.options('/api/user/google', cors(),
 // }) // include before other routes
 
 
-app.use(cors(
-  {
-  origin: 
-  [process.env.BASE_URL, process.env.SERVER_URL],
-   credentials: true, methods: "get, post, put, options"}
-   ))
 
 app.use(cookieParser())
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin" : "http://localhost:3000");
-//   next();
-// });
+
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 
