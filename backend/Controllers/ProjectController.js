@@ -107,12 +107,7 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
 
-
-    console.log(req.body)
-
-
     const { type, name, info, iframe } = req.body
-
 
     knex.insert(
         {
@@ -129,9 +124,6 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
             res.status(200).json(
                 data
             )
-
-
-
         })
 
         .catch(err => {
@@ -139,7 +131,6 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
             return new AppError('Could not create Project', 404)
         })
 })
-
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
 
@@ -161,7 +152,6 @@ exports.deleteProject = catchAsync(async (req, res, next) => {
 
         })
     })
-
 
 exports.addComment = async (req, res) => {
     try {
