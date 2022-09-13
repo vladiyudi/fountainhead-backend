@@ -112,9 +112,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
             })
     }
 
-
-
-})
+}})
 
 exports.getProjectById = catchAsync(async (req, res, next) => {
   const id = req.params.id;
