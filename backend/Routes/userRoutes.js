@@ -18,6 +18,13 @@ router.get('/success', (req, res, next) => {
 }, loginWithGoogle )
 
 
+router.get('/logout', (req, res) => {
+    req.logout(err => {
+        if (err) res.send(err)
+        res.send('logged out')
+    })
+})
+
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
 
 router.get('/githubsuccess', (req, res, next) => {
@@ -30,8 +37,6 @@ router.get('/:userId', getUserById)
 router.post('/signup', passwordMatch, validateSignUp(signUpSchema), validateNewUser, signup)
 
 router.post('/login', validateLogin(loginSchema), validateEmail, validatePasswordMatch, login)
-
-
 
 router.get(`/github/callback`,
     passport.authenticate('github', {
@@ -46,18 +51,17 @@ router.get('/google/callback', passport.authenticate('google', {
 }),
 )
 
-
-
 router.get('/fail', (req, res) => {
     res.send('fail')
 })
 
-router.get('/logout', (req, res) => {
-    req.logout(err => {
-        if (err) res.send(err)
-        res.send('logged out')
-    })
-})
+// router.get('/logout', (req, res) => {
+//     console.log('logout')
+//     req.logout(err => {
+//         if (err) res.send(err)
+//         res.send('logged out')
+//     })
+// })
 
 // router.get('/donation', auth, makeDonation)
 

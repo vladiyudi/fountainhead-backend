@@ -70,7 +70,7 @@ const validatePasswordMatch = async (req, res, next) => {
 }
 
 const auth = (req, res, next) => {
-  console.log('auth')
+  // console.log('auth')
   const { token } = req.cookies;
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {

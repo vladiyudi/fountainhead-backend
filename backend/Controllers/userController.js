@@ -94,7 +94,7 @@ const loginWithGoogle = async (req, res) => {
       secure: process.env.NODE_ENV === 'production' ? true : false,
       maxAge: 15151252151251
     })
-    res.redirect('http://localhost:3000/donation')
+    res.redirect('http://localhost:3000/')
   }
   catch (err) {
     console.log(err);

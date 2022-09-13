@@ -4,7 +4,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const makeDonation = async (req, res)=>{
 try{
-    console.log('inside makeDonation')
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
