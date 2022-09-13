@@ -14,11 +14,7 @@ const {
 
 router
   .get("/", projectController.getAllProjects)
-  .post(
-    "/",
-    projectController.uploadProjectPicture,
-    projectController.createNewProject
-  )
+  .post("/", auth, projectController.createNewProject)
   .delete("/", projectController.deleteProject);
 
 router.get("/one/:id", projectController.getProjectById);
@@ -33,6 +29,6 @@ router.get("/vote/:projectId", auth, getProjectVotes);
 
 router.get("/sort", auth, sortByVotes);
 
-router.get('/userProjects' , auth , getProjectsByUserId )
+router.get('/userProjects', auth, getProjectsByUserId)
 
 module.exports = router;

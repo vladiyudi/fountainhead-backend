@@ -32,7 +32,7 @@ const multerFilter = (req, file, cb) => {
   }
 }
 
-const upload = multer({
+const upload = multer({ 
   storage: multerStorage,
   fileFilter: multerFilter
 })
@@ -141,14 +141,12 @@ const uploadToCloudinary = async (req, res, next) => {
           .then(data => {
             console.log('DATA', data)
 
-
             res.status(200).json({
               status: 'Success',
               data: photoUrl
             })
           })
 
-        return;
       }
     });
   }

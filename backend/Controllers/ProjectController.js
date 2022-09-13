@@ -134,10 +134,12 @@ exports.getProjectById = catchAsync(async (req, res, next) => {
 
 exports.createNewProject = catchAsync(async (req, res, next) => {
 
-    const { type, name, info, iframe } = req.body;
+    const { type, name, info, iframe, userid } = req.body;
+    console.log(userid)
 
     knex
         .insert({
+            userId: userid,
             type,
             name,
             info,
@@ -277,7 +279,7 @@ exports.getProjectsByUserId = catchAsync(async (req, res, next) => {
 
             res.status(200).json({
                 status: 'success',
-                data : data
+                data: data
             })
         })
 })
