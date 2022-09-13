@@ -1,25 +1,35 @@
-const express = require('express')
-const router = express.Router()
-const projectController = require('../Controllers/ProjectController')
-const {auth} = require('../Middleware/userMiddleware')
+const express = require("express");
+const router = express.Router();
+const projectController = require("../Controllers/ProjectController");
+const { auth } = require("../Middleware/userMiddleware");
 
-const {addComment, getComments, voteForProject, getProjectVotes} = require('../Controllers/ProjectController')
-
+const {
+  addComment,
+  getComments,
+  voteForProject,
+  getProjectVotes,
+  sortByVotes,
+} = require("../Controllers/ProjectController");
 
 router
-    .get('/', projectController.getAllProjects)
-    .post('/', projectController.uploadProjectPicture, projectController.createNewProject)
-    .delete('/', projectController.deleteProject)
+  .get("/", projectController.getAllProjects)
+  .post(
+    "/",
+    projectController.uploadProjectPicture,
+    projectController.createNewProject
+  )
+  .delete("/", projectController.deleteProject);
 
-router.get('/one/:id', projectController.getProjectById)
+router.get("/one/:id", projectController.getProjectById);
 
+router.post("/addComment/:projectId", auth, addComment);
 
-router.post('/addComment/:projectId', auth, addComment)
+router.get("/getComments/:projectId", auth, getComments);
 
-router.get('/getComments/:projectId', auth, getComments)
+router.post("/vote/:projectId", auth, voteForProject);
 
-router.post('/vote/:projectId', auth, voteForProject)
+router.get("/vote/:projectId", auth, getProjectVotes);
 
-router.get('/vote/:projectId', auth, getProjectVotes)
+router.get("/sort", auth, sortByVotes);
 
-module.exports = router
+module.exports = router;

@@ -152,9 +152,6 @@ const uploadToCloudinary = async (req, res, next) => {
           })
 
 
-
-
-
         return;
       }
     });
