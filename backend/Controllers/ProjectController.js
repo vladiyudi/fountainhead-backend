@@ -80,10 +80,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
         }
         //  Query Project by Name
         if (req.body.name) {
-
             const data = await knex('projects').whereILike('name', `%${req.body.name}%`)
-            console.log(data)
-
             res.status(200).json({
                 status: 'Success',
                 data: data
