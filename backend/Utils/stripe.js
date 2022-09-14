@@ -7,7 +7,7 @@ try{
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${process.env.BASE_URL}/success`,
+        success_url: `${process.env.BASE_URL}/Reward`,
         cancel_url: `${process.env.BASE_URL}/cancel`,
         line_items: [{
             price_data: {
