@@ -31,8 +31,6 @@ const upload = multer({
 exports.uploadProjectPicture = upload.single("picture");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
-    console.log(req.body);
-
     // Query For Project Type
     if (
         req.body.type === "BE" ||
@@ -161,25 +159,17 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
     ;
-
     const id = req.body.projectId
-
-    console.log(id)
-
     knex('projects')
         .where('projectId', id).del()
-
         .then(data => {
-
             if (!data) {
                 return next(new AppError('No Project Found With That ID', 404))
             }
-
             res.status(204).json({
                 status: 'success',
                 message: "Project Successfully Deleted",
                 data: null
-
             })
         })
 })

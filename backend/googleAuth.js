@@ -12,7 +12,6 @@ passport.use(new GoogleStrategy({
   
   async function(accessToken, refreshToken, profile, cb) {
 
-console.log(profile.photos[0].value)
    const user = await knex('users').where('email', profile.emails[0].value)
    if (!user.length) {
       const newUser = await knex('users').insert({
