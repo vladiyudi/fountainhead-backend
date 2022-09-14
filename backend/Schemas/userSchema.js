@@ -5,6 +5,7 @@ const signUpSchema = {
       email: { type: "string", format: "email" },
       password1: { type: "string", minLength: 2 },
       password2: { type: "string", minLength: 2 },
+      role: {type: 'string'}
     },
     required: ["email", "password1", "password2"],
       additionalProperties: false,
