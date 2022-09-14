@@ -94,7 +94,7 @@ const loginWithGoogle = async (req, res) => {
       secure: process.env.NODE_ENV === 'production' ? true : false,
       maxAge: 15151252151251
     })
-    res.redirect('http://localhost:3000/')
+    res.redirect('http://localhost:3000/AllProjects')
   }
   catch (err) {
     console.log(err);
@@ -127,9 +127,6 @@ const uploadToCloudinary = async (req, res, next) => {
       if (result) {
         fs.unlinkSync(req.file.path);
         req.body.photo = result.url
-
-
-        console.log('USER ID 💥', req.body)
         const userId = req.body.userid
         const photoUrl = req.body.photo
 

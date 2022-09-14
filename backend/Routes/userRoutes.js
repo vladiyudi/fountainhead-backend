@@ -22,8 +22,9 @@ router.get('/success', (req, res, next) => {
 router.get('/logout', (req, res) => {
     req.logout(err => {
         if (err) res.send(err)
-        res.send('logged out')
-    })
+        res.send('Logged out')
+    })  
+   
 })
 
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
