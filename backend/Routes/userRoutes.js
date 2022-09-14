@@ -79,6 +79,5 @@ router.patch('/updatePicture',
 
 router.patch('/updateMe' , auth  , updateUser)
 
-router.post('/role' , auth , updateRole)
 
 module.exports = router

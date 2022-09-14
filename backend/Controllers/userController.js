@@ -59,7 +59,7 @@ const signup = async (req, res) => {
       .insert({ name, email, password, role })
 
     if (userId)
-      res.send({ userId: userId[0], name, email, password, role});
+      res.send({ userId: userId[0], name, email, password, role });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
@@ -160,7 +160,8 @@ const updateUser = catchAsync(async (req, res) => {
       {
         name: req.body.name,
         email: req.body.email,
-        bio: req.body.bio
+        bio: req.body.bio,
+        role: req.body.role
       }
     )
 
@@ -177,23 +178,5 @@ const updateUser = catchAsync(async (req, res) => {
 
 })
 
-const updateRole = catchAsync(async (req, res, next) => {
 
-  const userId = req.body.userid
-  const role = req.body.role
-
-  knex('users').where({ id: userId })
-    .update(
-      {
-        role: role
-      })
-        .then(data => {
-          res.status(200).json({
-
-            status: 'Success',
-            data: data
-          })
-        })
-})
-
-module.exports = { getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle, updateRole };
+module.exports = { getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle};
