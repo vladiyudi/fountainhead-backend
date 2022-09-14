@@ -14,6 +14,8 @@ const {
 
 router
   .get("/", projectController.getAllProjects)
+  .get('/type' , projectController.getProjectsByType)
+  .get('/name' , projectController.getProjectByName)
   .post("/", auth, projectController.createNewProject)
   .delete("/", projectController.deleteProject);
 

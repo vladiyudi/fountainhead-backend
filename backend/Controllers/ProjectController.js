@@ -31,88 +31,45 @@ const upload = multer({
 exports.uploadProjectPicture = upload.single("picture");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
-    console.log(req.body);
 
-    // Query For Project Type
-    if (
-        req.body.type === "BE" ||
-        req.body.type === "FE" ||
-        req.body.type === "FS"
-    ) {
-        knex("projects")
-            .where({ type: req.body.type })
-            .then((rows) => {
-                res.status(200).json({
-                    status: "Success",
-                    results: rows.length,
-                    data: rows,
-                });
-                next();
-            })
-            .catch((err) => {
-                console.log(err);
-                return new AppError("Something Went Wrong", 404);
-            });
-    } else {
-        //  Get All Projects
-        knex("projects")
-            .then((rows) => {
-                res.status(200).json({
-                    status: "Success",
-                    results: rows.length,
-                    data: rows,
-                });
-            })
-
-        // Query For Project Type
-        if (req.body.type === 'BE' || req.body.type === 'FE' || req.body.type === 'FS') {
-            knex('projects').where({ type: req.body.type })
-                .then(rows => {
-                    res.status(200).json({
-                        status: 'Success',
-                        results: rows.length,
-                        data: rows
-                    })
-                    next()
-                })
-                .catch(err => {
-                    console.log(err)
-                    return new AppError('Something Went Wrong', 404)
-                })
-        }
-        //  Query Project by Name
-        if (req.body.name) {
-
-            const data = await knex('projects').whereILike('name', `%${req.body.name}%`)
-            console.log(data)
-
+    knex("projects")
+        .then((rows) => {
             res.status(200).json({
-                status: 'Success',
-                data: data
+                status: "Success",
+                results: rows.length,
+                data: rows,
+            });
+
+        })
+})
+
+exports.getProjectsByType = catchAsync(async (req, res, next) => {
+   console.log(req.body)
+    if (req.body.type === 'BE' || req.body.type === 'FE' || req.body.type === 'FS') {
+        knex('projects').where({ type: req.body.type })
+            .then(rows => {
+                res.status(200).json({
+                    status: 'Success',
+                    results: rows.length,
+                    data: rows
+                })
             })
-        }
+    } 
+    
+})
 
-        else {
+exports.getProjectByName = catchAsync(async (req, res, next) => {
+    
+    if (req.body.name) {
 
-            //  Get All Projects
-            knex('projects')
-                .then(rows => {
+        const data = await knex('projects').whereILike('name', `%${req.body.name}%`)
+        console.log(data)
 
-                    res.status(200).json({
-                        status: 'Success',
-                        results: rows.length,
-                        data: rows
-                    })
-
-                })
-
-                .catch(err => {
-                    console.log(err)
-                    return new AppError('Something Went Wrong', 404)
-                })
-        }
-
-    }
+        res.status(200).json({
+            status: 'Success',
+            data: data
+        })
+    } else {res.send('No Projects Found')}
 })
 
 exports.getProjectById = catchAsync(async (req, res, next) => {
