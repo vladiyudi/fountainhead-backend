@@ -32,7 +32,7 @@ const multerFilter = (req, file, cb) => {
   }
 }
 
-const upload = multer({ 
+const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter
 })
@@ -164,7 +164,7 @@ const updateUser = catchAsync(async (req, res) => {
       }
     )
 
-  
+
 
     .then(data => {
       console.log(data)
@@ -177,4 +177,23 @@ const updateUser = catchAsync(async (req, res) => {
 
 })
 
-module.exports = { getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle };
+const updateRole = catchAsync(async (req, res, next) => {
+
+  const userId = req.body.userid
+  const role = req.body.role
+
+  knex('users').where({ id: userId })
+    .update(
+      {
+        role: role
+      })
+        .then(data => {
+          res.status(200).json({
+
+            status: 'Success',
+            data: data
+          })
+        })
+})
+
+module.exports = { getUserById, signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle, updateRole };

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle, getUserById } = require('../Controllers/userController')
+const { signup, login, validateUser, updateUser, uploadUserPicture, uploadToCloudinary, loginWithGoogle, getUserById, updateRole } = require('../Controllers/userController')
 const { passwordMatch, validateNewUser, validateSignUp, validateLogin, validateEmail, validatePasswordMatch, auth } = require('../Middleware/userMiddleware')
 const { makeDonation } = require('../Utils/stripe')
 const { signUpSchema, loginSchema } = require('../Schemas/userSchema')
@@ -57,6 +57,8 @@ router.get('/fail', (req, res) => {
     res.send('fail')
 })
 
+
+
 // router.get('/logout', (req, res) => {
 //     console.log('logout')
 //     req.logout(err => {
@@ -76,5 +78,7 @@ router.patch('/updatePicture',
 )
 
 router.patch('/updateMe' , auth  , updateUser)
+
+router.post('/role' , auth , updateRole)
 
 module.exports = router
