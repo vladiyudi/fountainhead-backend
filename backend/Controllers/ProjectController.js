@@ -118,25 +118,17 @@ exports.createNewProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
     ;
-
     const id = req.body.projectId
-
-    console.log(id)
-
     knex('projects')
         .where('projectId', id).del()
-
         .then(data => {
-
             if (!data) {
                 return next(new AppError('No Project Found With That ID', 404))
             }
-
             res.status(204).json({
                 status: 'success',
                 message: "Project Successfully Deleted",
                 data: null
-
             })
         })
 })
@@ -207,9 +199,6 @@ exports.getProjectVotes = async (req, res) => {
 exports.sortByVotes = async (req, res) => {
     try {
         const { role, sortBy } = req.query
-
-        console.log(role, sortBy)
-
         if (role === 'student') {
             const projects = await knex('projects').join('studentRating', 'projects.projectId', 'studentRating.projectId').orderBy(sortBy, 'desc')
             res.status(200).json(projects)
