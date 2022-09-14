@@ -80,10 +80,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
         }
         //  Query Project by Name
         if (req.body.name) {
-
             const data = await knex('projects').whereILike('name', `%${req.body.name}%`)
-            console.log(data)
-
             res.status(200).json({
                 status: 'Success',
                 data: data
@@ -240,9 +237,6 @@ exports.getProjectVotes = async (req, res) => {
 exports.sortByVotes = async (req, res) => {
     try {
         const { role, sortBy } = req.query
-
-        console.log(role, sortBy)
-
         if (role === 'student') {
             const projects = await knex('projects').join('studentRating', 'projects.projectId', 'studentRating.projectId').orderBy(sortBy, 'desc')
             res.status(200).json(projects)
