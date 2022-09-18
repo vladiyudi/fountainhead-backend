@@ -193,7 +193,7 @@ exports.voteForProject = async (req, res) => {
     if (user[0].role === "student")
       newRating = await addStudentVote(projectId, req.body);
     else newRating = await addClientVote(projectId, req.body);
-    res.send(newRating);
+    if (newRating) res.status(200).json('Vote Added');
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Could not vote" });
@@ -207,12 +207,12 @@ exports.getProjectVotes = async (req, res) => {
     const clientBestPractices = await getAvgClientBestPractices(projectId);
     const clientDesign = await getAvgClientDesign(projectId);
     const clientBugs = await getAvgClientBugs(projectId);
-  
+
     const clientVotes = {
-      clientCreativity,
-      clientBestPractices,
-      clientDesign,
-      clientBugs,
+      Creativity: Math.round(clientCreativity),
+      BestPractices: Math.round(clientBestPractices),
+      Design: Math.round(clientDesign),
+      Bugs: Math.round(clientBugs),
     };
 
     const studentCreativity = await getAvgStudentCreativity(projectId);
@@ -220,11 +220,14 @@ exports.getProjectVotes = async (req, res) => {
     const studentDesign = await getAvgStudentDesign(projectId);
     const studentBugs = await getAvgStudentBugs(projectId);
 
-    const studentVotes = {studentCreativity, studentBestPractices, studentDesign, studentBugs}
+    const studentVotes = {
+      Creativity: Math.round(studentCreativity),
+      BestPractices: Math.round(studentBestPractices),
+      Design: Math.round(studentDesign),
+      Bugs: Math.round(studentBugs),
+    };
 
-    res
-      .status(200)
-      .json({ studentVotes, clientVotes });
+    res.status(200).json({ studentVotes, clientVotes });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Could not get votes" });
