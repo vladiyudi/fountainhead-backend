@@ -14,7 +14,9 @@ router.get('/donation', makeDonation)
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
 router.get('/success', (req, res, next) => {
-    req.body.user = req?.user[0]
+    const { user } = req
+    if (user[0])  req.body.user = user[0]
+    else req.body.user = user
     next()
 }, loginWithGoogle )
 
@@ -30,7 +32,9 @@ router.get('/logout', (req, res) => {
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
 
 router.get('/githubsuccess', (req, res, next) => {
-    req.body.user = req?.user[0]
+    const { user } = req
+    if (user[0])  req.body.user = user[0]
+    else req.body.user = user
     next()
 }, loginWithGoogle)
 
@@ -56,20 +60,6 @@ router.get('/google/callback', passport.authenticate('google', {
 router.get('/fail', (req, res) => {
     res.send('fail')
 })
-
-
-
-// router.get('/logout', (req, res) => {
-//     console.log('logout')
-//     req.logout(err => {
-//         if (err) res.send(err)
-//         res.send('logged out')
-//     })
-// })
-
-// router.get('/donation', auth, makeDonation)
-
-
 
 router.patch('/updatePicture',
     uploadUserPicture,

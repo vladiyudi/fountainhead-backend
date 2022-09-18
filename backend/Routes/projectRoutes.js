@@ -27,7 +27,7 @@ router.get("/getComments/:projectId", auth, getComments);
 
 router.post("/vote/:projectId", auth, voteForProject);
 
-router.get("/vote/:projectId", auth, getProjectVotes);
+router.get("/vote/:projectId", getProjectVotes);
 
 router.get("/sort", auth, sortByVotes);
 
